@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +20,9 @@ import com.ebs.android_base_utility.base.util.LoadingView;
 import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class BaseFragmentActivity extends FragmentActivity implements BaseInterface {
@@ -27,7 +30,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     protected View loadingView;
     protected FragmentActivity thisActivity;
     private BroadcastReceiver receiver;
-    private View topBar;
+    View topBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
                 StatusBarUtil.addStatus(thisActivity,(LinearLayout) topBar);
             }
         }
+
     }
 
     @Override
@@ -57,6 +61,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     public int getRootLoadingViewResId() {
         return 0;
     }
+
 
     @Override
     public void onCreated() {
@@ -73,11 +78,32 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     }
 
+    public void setColor(int color){
+        ((AVLoadingIndicatorView)loadingView.findViewById(R.id.progress)).setIndicatorColor(color);
+    }
+
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)findViewById(resId);
         loadingView = new LoadingView().getProgressBar(this,rootView);
     }
-
+    /* protected void replaceFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate){
+         try {
+             FragmentManager fragmentManager = getSupportFragmentManager();
+             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+             //fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+             if(animate) {
+                 fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                         R.anim.fragment_slide_left_exit,
+                         R.anim.fragment_slide_right_enter,
+                         R.anim.fragment_slide_right_exit);
+             }
+             fragmentTransaction.replace(idContainer, fragment);
+             if(addToBackStack) {
+                 fragmentTransaction.addToBackStack(fragment.getClass().getName());
+             }
+             fragmentTransaction.commit();
+         } catch (Exception e){}
+     }*/
     protected void changeFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -120,10 +146,32 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             fragmentTransaction.commit();
         } catch (Exception e){}
     }
+   /* protected void addFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate){
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            //fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            if(animate) {
+                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit,
+                        R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+            }
+            fragmentTransaction.add(idContainer, fragment);
+            if(addToBackStack) {
+                fragmentTransaction.addToBackStack(fragment.getClass().getName());
+            }
+            fragmentTransaction.commit();
+        } catch (Exception e){}
+    }*/
 
-    protected void hideFragment(){
+    protected void hideFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
+        /*FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();*/
+
     }
 
     public Context getDialogContext() {

@@ -1,5 +1,6 @@
 package com.ebs.android_base_utility.base;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.ebs.android_base_utility.base.util.LoadingView;
 import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.ButterKnife;
 
@@ -38,7 +40,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     private boolean isActivityCreated = false;
     private boolean isFragmentVisible = false;
     private BroadcastReceiver receiver;
-    private View topBar;
+    View topBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+
+                    System.out.println("XXX anim exists "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
                     if(isActivityCreated && isFragmentVisible){
                         onActivityCreated();
                     }
@@ -71,7 +75,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 }
             });
         } else {
-           if(isActivityCreated && isFragmentVisible) {
+
+            System.out.println("XXX anim null "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
+            if(isActivityCreated && isFragmentVisible) {
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -124,6 +130,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
+    public void setColor(int color){
+        ((AVLoadingIndicatorView)loadingView.findViewById(R.id.progress)).setIndicatorColor(color);
+    }
+
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)view.findViewById(resId);
         if(rootView == null){
@@ -143,6 +153,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     public int getRootLoadingViewResId() {
         return 0;
     }
+
 
     @Override
     public void onCreated() {
@@ -193,7 +204,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     private void removeKeyboard(){
         try {
             (getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            if (((getActivity()).getCurrentFocus() != null) && ((getActivity()).getCurrentFocus().getWindowToken() != null)) {
+            if (((getActivity()).getCurrentFocus() != null) && (((Activity) getActivity()).getCurrentFocus().getWindowToken() != null)) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((getActivity()).getCurrentFocus().getWindowToken(), 0);
             }
         } catch (Exception e) {
