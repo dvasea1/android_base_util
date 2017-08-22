@@ -10,12 +10,21 @@
         android:clickable="true"
         android:id="@+id/waitLayout">
 
-        <com.wang.avi.AVLoadingIndicatorView
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progress"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            app:SpinKit_Color="#000000" />
+
+   <!--     <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/progress"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:indicatorColor="#000000"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true" />-->
     </RelativeLayout>
 
 </RelativeLayout>

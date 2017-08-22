@@ -27,7 +27,6 @@ import com.ebs.android_base_utility.base.util.LoadingView;
 import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.ButterKnife;
 
@@ -130,9 +129,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
-    public void setColor(int color){
-        ((AVLoadingIndicatorView)loadingView.findViewById(R.id.progress)).setIndicatorColor(color);
-    }
 
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)view.findViewById(resId);
