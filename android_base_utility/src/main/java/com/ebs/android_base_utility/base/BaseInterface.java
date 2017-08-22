@@ -8,5 +8,5 @@ public interface BaseInterface {
     int getRootLoadingViewResId();
     void onCreated();
     void onViewCreated();
-     void onActivityCreated();
+    void onActivityCreated();
 }
