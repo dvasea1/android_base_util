@@ -174,7 +174,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                     if(getActivity()!=null){
                         broadcastReceiver.Receive(context,intent.getExtras().getString("action"),intent.getExtras().getString("sender"),intent.getExtras().getString("data"));
                     }
-                } catch (Exception e){}
+                } catch (Exception e){e.printStackTrace();}
             }
         };
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver,new IntentFilter("filter"));
