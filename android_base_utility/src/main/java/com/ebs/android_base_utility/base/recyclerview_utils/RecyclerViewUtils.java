@@ -95,17 +95,10 @@ public class RecyclerViewUtils {
         if (headerAndFooterAdapter.getFooterViewsCount() > 0) {
             footerView = (LoadingFooter) headerAndFooterAdapter.getFooterView();
             footerView.setState(state);
-
-
-            // recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
         } else {
             footerView = new LoadingFooter(instance);
             footerView.setState(state);
-
-
-
             headerAndFooterAdapter.addFooterView(footerView);
-            //  recyclerView.scrollToPosition(headerAndFooterAdapter.getItemCount() - 1);
         }
     }
 

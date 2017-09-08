@@ -53,7 +53,7 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
     DataEmptyObserver dataEmptyObserver = new DataEmptyObserver() {
         @Override
         public void onDataChanged(boolean isEmpty) {
-            System.out.println("dataEmptyObserver "+isEmpty);
+           // System.out.println("dataEmptyObserver "+isEmpty);
             if(isEmpty){
                 if(emptyView!=null)emptyView.setVisibility(View.VISIBLE);
             } else {
