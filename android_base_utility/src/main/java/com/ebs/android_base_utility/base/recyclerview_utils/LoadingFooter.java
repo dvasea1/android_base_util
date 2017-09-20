@@ -1,24 +1,37 @@
 package com.ebs.android_base_utility.base.recyclerview_utils;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.ebs.android_base_utility.R;
 
+import butterknife.BindView;
+
 
 public class LoadingFooter extends RelativeLayout {
 
     protected State mState = State.Normal;
-    private View mLoadingView;
+    @Nullable
+    View mLoadingView;
 
-    public LoadingFooter(Context context) {
+    @IdRes int ResourceIdRoot;
+    @IdRes int ResourceIdProgress;
+    @LayoutRes int resourceLayout;
+
+    public LoadingFooter(Context context, @LayoutRes int resourceLayout,@IdRes int ResourceIdRoot,@IdRes int ResourceIdProgress) {
         super(context);
+        this.resourceLayout = resourceLayout;
+        this.ResourceIdRoot = ResourceIdRoot;
+        this.ResourceIdProgress = ResourceIdProgress;
         init(context);
     }
 
-    public LoadingFooter(Context context, AttributeSet attrs) {
+   /* public LoadingFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -26,11 +39,11 @@ public class LoadingFooter extends RelativeLayout {
     public LoadingFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-    }
+    }*/
 
     public void init(Context context) {
 
-        inflate(context, R.layout.loading_footer, this);
+        inflate(context,resourceLayout, this);
         setOnClickListener(null);
 
         setState(State.Normal, true);
@@ -57,24 +70,25 @@ public class LoadingFooter extends RelativeLayout {
                 if (mLoadingView != null) {
                     mLoadingView.setVisibility(INVISIBLE);
                 } else {
-                    mLoadingView = findViewById(R.id.progress);
+
+                    mLoadingView = findViewById(ResourceIdProgress);
                     mLoadingView.setVisibility(INVISIBLE);
                 }
-                findViewById(R.id.waitLayout).setVisibility(VISIBLE);
+                findViewById(ResourceIdRoot).setVisibility(VISIBLE);
                 break;
             case Loading:
                 setOnClickListener(null);
                 if (mLoadingView != null) {
                     mLoadingView.setVisibility(VISIBLE);
                 } else {
-                    mLoadingView = findViewById(R.id.progress);
+                    mLoadingView = findViewById(ResourceIdProgress);
                     mLoadingView.setVisibility(VISIBLE);
                 }
-                findViewById(R.id.waitLayout).setVisibility(VISIBLE);
+                findViewById(ResourceIdRoot).setVisibility(VISIBLE);
                 break;
             case TheEnd:
                 setOnClickListener(null);
-               findViewById(R.id.waitLayout).setVisibility(GONE);
+               findViewById(ResourceIdRoot).setVisibility(GONE);
                 break;
             default:
 

@@ -3,6 +3,8 @@ package com.ebs.android_base_utility.base.recyclerview_utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +38,9 @@ public class RecyclerLazyLoad {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View tToolbar;
     private View emptyView;
+    private @LayoutRes  int resourceLayout;
+    private  @IdRes  int ResourceIdRoot;
+    private @IdRes  int ResourceIdProgress;
 
     public RecyclerLazyLoad(FragmentActivity activity, RecyclerView recyclerView, RecyclerView.Adapter adapter){
         this.recyclerView = recyclerView;
@@ -58,6 +63,12 @@ public class RecyclerLazyLoad {
 
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
+    }
+
+    public void setResourceLoading(@LayoutRes final int resourceLayout, @IdRes final int ResourceIdRoot, @IdRes final int ResourceIdProgress){
+        this.resourceLayout = resourceLayout;
+        this.ResourceIdRoot = ResourceIdRoot;
+        this.ResourceIdProgress = ResourceIdProgress;
     }
 
     public void setAdapter(RecyclerView.ItemAnimator animator, RecyclerView.LayoutManager layoutManager, RecyclerView.ItemDecoration itemDecoration){
@@ -117,7 +128,7 @@ public class RecyclerLazyLoad {
                 super.onLoadNextPage(view);
                 System.out.println("onLoadNextPage isMoreDataAvailable "+isMoreDataAvailable);
                 if(!isMoreDataAvailable){
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, null);
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
                 }
 
                 LoadingFooter.State state = RecyclerViewUtils.getFooterViewState(recyclerView);
@@ -128,12 +139,12 @@ public class RecyclerLazyLoad {
                 if (isMoreDataAvailable) {
                     // loading more
                     // adapter.addFooterView(new LoadingFooter(getDialogContext()));
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Loading, null);
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Loading, resourceLayout,ResourceIdRoot,ResourceIdProgress);
                     if(loadInterface!=null)loadInterface.onLoadMore();
                     //getFolders(false,null);
                 } else {
                     //the end
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, null);
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
                     //headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
                 }
             }
@@ -260,16 +271,16 @@ public class RecyclerLazyLoad {
 
             System.out.println("onLoadNextPage added items");
             if(!isMoreDataAvailable){
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, null);
+                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
             }
             if (tempObjects.size() < limit) {
                 isMoreDataAvailable = false;
                 System.out.println("no more available ");
                 //if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0)
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, null);
+                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
                 //headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
             } else {
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, null);
+                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
             }
         }
     }

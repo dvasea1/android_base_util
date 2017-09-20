@@ -160,6 +160,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     public void onViewCreated() {
 
     }
+
     @Override
     public void onActivityCreated() {
         isActivityCreated = false;

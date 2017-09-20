@@ -2,6 +2,8 @@ package com.ebs.android_base_utility.base.recyclerview_utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,7 +76,7 @@ public class RecyclerViewUtils {
         return new ExStaggeredGridLayoutManager(columns,StaggeredGridLayoutManager.VERTICAL);
     }
 
-    public static void setFooterViewState(Activity instance, RecyclerView recyclerView, LoadingFooter.State state, View.OnClickListener errorListener) {
+    public static void setFooterViewState(Activity instance, RecyclerView recyclerView, LoadingFooter.State state, @LayoutRes int resourceLayout, @IdRes int ResourceIdRoot, @IdRes int ResourceIdProgress) {
         System.out.println("state is "+state);
 
         if(instance==null || instance.isFinishing()) {
@@ -96,7 +98,7 @@ public class RecyclerViewUtils {
             footerView = (LoadingFooter) headerAndFooterAdapter.getFooterView();
             footerView.setState(state);
         } else {
-            footerView = new LoadingFooter(instance);
+            footerView = new LoadingFooter(instance,resourceLayout,ResourceIdRoot,ResourceIdProgress);
             footerView.setState(state);
             headerAndFooterAdapter.addFooterView(footerView);
         }
