@@ -4,13 +4,8 @@ import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-
-import com.ebs.android_base_utility.R;
-
-import butterknife.BindView;
 
 
 public class LoadingFooter extends RelativeLayout {

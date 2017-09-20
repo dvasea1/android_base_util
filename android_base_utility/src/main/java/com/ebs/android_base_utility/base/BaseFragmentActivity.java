@@ -59,6 +59,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         return 0;
     }
 
+    @Override
+    public int getLayoutResourceIdLoading() {
+        return 0;
+    }
 
     @Override
     public void onCreated() {
@@ -78,7 +82,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)findViewById(resId);
-        loadingView = new LoadingView().getProgressBar(this,rootView);
+        loadingView = new LoadingView().getProgressBar(this,rootView,getLayoutResourceIdLoading());
     }
 
     protected void changeFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -133,9 +134,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)view.findViewById(resId);
         if(rootView == null){
-            loadingView = new LoadingView().getProgressBar(getActivity(),view);
+            loadingView = new LoadingView().getProgressBar(getActivity(),view,getLayoutResourceIdLoading());
         } else {
-            loadingView = new LoadingView().getProgressBar(getActivity(),rootView);
+            loadingView = new LoadingView().getProgressBar(getActivity(),rootView,getLayoutResourceIdLoading());
         }
     }
 
@@ -150,6 +151,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         return 0;
     }
 
+    @Override
+    public int getLayoutResourceIdLoading() {
+        return 0;
+    }
 
     @Override
     public void onCreated() {
