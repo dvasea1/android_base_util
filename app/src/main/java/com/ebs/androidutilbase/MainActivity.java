@@ -15,7 +15,7 @@ public class MainActivity extends BaseFragmentActivity {
     public int getLayoutResourceId() {
         return R.layout.activity_main;
     }
-    
+
     @Override
     public void onActivityCreated() {
         super.onActivityCreated();
