@@ -219,11 +219,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
             FragmentManager fragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(animate) {
-               /* fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                         R.anim.fragment_slide_left_exit,
                         R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);*/
-                fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, 0, 0, R.anim.slide_out_left);
+                        R.anim.fragment_slide_right_exit);
             }
             if(replace) {
                 fragmentTransaction.replace(idContainer, fragment);
