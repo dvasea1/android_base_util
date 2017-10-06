@@ -31,7 +31,7 @@ public class StatusBarUtil {
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.TRANSPARENT);
+        tintManager.setTintColor(Color.parseColor("#1a000000"));
     }
 
     public static int getStatusBarHeight(Context context) {

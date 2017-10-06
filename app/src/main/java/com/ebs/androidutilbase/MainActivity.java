@@ -1,15 +1,12 @@
 package com.ebs.androidutilbase;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.ebs.android_base_utility.base.BaseFragmentActivity;
 
-import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseFragmentActivity {
 
-    @BindView(R.id.recycler)
-    RecyclerView recyclerView;
+
 
     @Override
     public int getLayoutResourceId() {
@@ -19,7 +16,13 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void onActivityCreated() {
         super.onActivityCreated();
-
+      ///change();
     }
 
+    @OnClick(R.id.btn) void click(){
+        changeFragmentPopup(R.id.root,MyFragment.newInstance(),true,true,false);
+    }
+    public void change(){
+        changeFragment(R.id.root,MyFragment.newInstance(),true,true,false);
+    }
 }

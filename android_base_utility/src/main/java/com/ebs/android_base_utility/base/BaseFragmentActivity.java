@@ -90,10 +90,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(animate) {
-                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit,
-                        R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, 0, 0, R.anim.slide_out_left);
+            } else {
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             }
             if(replace) {
                 fragmentTransaction.replace(idContainer, fragment);
@@ -111,10 +110,26 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(animate) {
-                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_top_enter,
-                        R.anim.fragment_slide_top_exit,
-                        R.anim.fragment_slide_bottom_enter,
-                        R.anim.fragment_slide_bottom_exit);
+                fragmentTransaction.setCustomAnimations(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom,R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
+            }
+            if(replace) {
+                fragmentTransaction.replace(idContainer, fragment);
+            } else {
+                fragmentTransaction.add(idContainer, fragment);
+            }
+            if(addToBackStack) {
+                fragmentTransaction.addToBackStack(fragment.getClass().getName());
+            }
+            fragmentTransaction.commit();
+        } catch (Exception e){}
+    }
+
+    protected void changeFragmentPopupBottom(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
+        try {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            if(animate) {
+                fragmentTransaction.setCustomAnimations(R.anim.abc_slide_in_top, R.anim.abc_slide_out_top,R.anim.abc_slide_in_top, R.anim.abc_slide_out_top);
             }
             if(replace) {
                 fragmentTransaction.replace(idContainer, fragment);

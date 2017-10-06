@@ -3,10 +3,9 @@
      android:duration="@android:integer/config_mediumAnimTime">
 
     <translate
-            android:fromXDelta="-100%p"
+            android:fromXDelta="0"
             android:startOffset="25"
-            android:toXDelta="0" />
-
+            android:toXDelta="-100%p"/>
 
 
 </set>
