@@ -20,9 +20,9 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     @OnClick(R.id.btn) void click(){
-        changeFragment(R.id.root,MyFragment.newInstance(),true,true,false);
+        changeFragmentPopup(R.id.root,MyFragment.newInstance(),true,true,false);
     }
     public void change(){
-        changeFragment(R.id.root,MyFragment.newInstance(),true,true,false);
+        changeFragmentPopup(R.id.root,MyFragment.newInstance(),true,true,false);
     }
 }
