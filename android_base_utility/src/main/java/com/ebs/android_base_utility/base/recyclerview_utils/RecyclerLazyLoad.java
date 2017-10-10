@@ -338,4 +338,8 @@ public class RecyclerLazyLoad {
     public void setMoreDataAvailable(boolean moreDataAvailable) {
         isMoreDataAvailable = moreDataAvailable;
     }
+
+    public boolean isMoreDataAvailable() {
+        return isMoreDataAvailable;
+    }
 }
