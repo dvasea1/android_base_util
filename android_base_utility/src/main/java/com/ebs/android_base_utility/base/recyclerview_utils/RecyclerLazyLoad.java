@@ -41,6 +41,7 @@ public class RecyclerLazyLoad {
     private @LayoutRes  int resourceLayout;
     private  @IdRes  int ResourceIdRoot;
     private @IdRes  int ResourceIdProgress;
+    private Boolean next;
 
     public RecyclerLazyLoad(FragmentActivity activity, RecyclerView recyclerView, RecyclerView.Adapter adapter){
         this.recyclerView = recyclerView;
@@ -273,14 +274,22 @@ public class RecyclerLazyLoad {
             if(!isMoreDataAvailable){
                 RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
             }
-            if (tempObjects.size() < limit) {
-                isMoreDataAvailable = false;
-                System.out.println("no more available ");
-                //if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0)
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
-                //headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
+            if(getNext() != null){
+                if (!getNext()) {
+                    isMoreDataAvailable = false;
+                    System.out.println("no more available ");
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                } else {
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                }
             } else {
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                if (tempObjects.size() < limit) {
+                    isMoreDataAvailable = false;
+                    System.out.println("no more available ");
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                } else {
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                }
             }
         }
     }
@@ -341,5 +350,13 @@ public class RecyclerLazyLoad {
 
     public boolean isMoreDataAvailable() {
         return isMoreDataAvailable;
+    }
+
+    public Boolean getNext() {
+        return next;
+    }
+
+    public void setNext(Boolean next) {
+        this.next = next;
     }
 }

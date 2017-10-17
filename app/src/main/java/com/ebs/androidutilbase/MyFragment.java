@@ -21,4 +21,5 @@ public class MyFragment extends BaseFragment {
     @OnClick(R.id.btn) void click(){
         ((MainActivity)getActivity()).change();
     }
+
 }
