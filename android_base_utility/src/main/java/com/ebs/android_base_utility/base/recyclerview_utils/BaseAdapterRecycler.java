@@ -38,6 +38,7 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
         final int size = getItemCount();
         mObjects.clear();
         notifyItemRangeRemoved(0, size);
+        if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
     }
 
     @Override

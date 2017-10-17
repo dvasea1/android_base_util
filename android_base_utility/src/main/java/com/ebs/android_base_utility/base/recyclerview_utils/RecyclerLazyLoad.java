@@ -243,9 +243,12 @@ public class RecyclerLazyLoad {
                     try {
                         ((BaseAdapterRecycler) adapter).setEmptyView(null);
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    isMoreDataAvailable = true;
-                    offset = 0;
+                    //isMoreDataAvailable = true;
+                   // offset = 0;
+                   // setNext(null);
+                    reset();
                     loadInterface.onRefresh();
                 }
             });
@@ -295,14 +298,17 @@ public class RecyclerLazyLoad {
     }
 
     public void reset(){
-        final int size = adapter.getItemCount();
+        ((BaseAdapterRecycler)adapter).clear();
+     /*   final int size = adapter.getItemCount();
         objects.clear();
-        adapter.notifyItemRangeRemoved(0, size);
+        adapter.notifyItemRangeRemoved(0, size);*/
         if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0) {
             headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
         }
+        ((BaseAdapterRecycler) adapter).setEmptyView(null);
         setMoreDataAvailable(true);
         setOffset(0);
+        setNext(null);
     }
 
     public interface LoadInterface{

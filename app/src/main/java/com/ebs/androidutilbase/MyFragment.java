@@ -18,8 +18,6 @@ public class MyFragment extends BaseFragment {
         return R.layout.fragment;
     }
 
-    @OnClick(R.id.btn) void click(){
-        ((MainActivity)getActivity()).change();
-    }
+
 
 }
