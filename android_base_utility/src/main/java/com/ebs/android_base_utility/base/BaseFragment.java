@@ -123,7 +123,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         super.onActivityCreated(savedInstanceState);
         isActivityCreated = true;
         isFragmentVisible = getUserVisibleHint();
-        topBar = view.findViewById(R.id.navigationBar);
+        getNavigation((ViewGroup) view);
+        //topBar = view.findViewById(R.id.top);
         if(topBar != null){
             if(topBar instanceof NavigationBar){
                 StatusBarUtil.addStatus(getActivity(),(LinearLayout) topBar);
@@ -131,9 +132,21 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
-
+    private void getNavigation(ViewGroup parent) {
+        int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = parent.getChildAt(i);
+            if (child instanceof ViewGroup) {
+                getNavigation((ViewGroup) child);
+                if (child instanceof NavigationBar) {
+                    topBar = child;
+                    break;
+                }
+            }
+        }
+    }
     private void createLoadingView(int resId){
-        RelativeLayout rootView = (RelativeLayout)view.findViewById(resId);
+        RelativeLayout rootView = view.findViewById(resId);
         if(rootView == null){
             loadingView = new LoadingView().getProgressBar(getActivity(),view,getLayoutResourceIdLoading());
         } else {

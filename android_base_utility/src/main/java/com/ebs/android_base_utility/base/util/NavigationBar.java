@@ -29,6 +29,5 @@ public class NavigationBar extends LinearLayout {
 
     private void init(){
         setOrientation(LinearLayout.VERTICAL);
-        setId(R.id.navigationBar);
     }
 }

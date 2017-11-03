@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -20,6 +21,9 @@ import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
 import com.ebs.android_base_utility.base.util.NavigationBar;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -41,13 +45,28 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         onViewCreated();
         onActivityCreated();
         StatusBarUtil.setStatusTintColor(thisActivity);
-        topBar = findViewById(R.id.navigationBar);
+        //topBar = getNavigationfindViewById(R.id.top);
+        getNavigation((ViewGroup) getWindow().getDecorView().getRootView());
         if(topBar != null){
             if(topBar instanceof NavigationBar){
                 StatusBarUtil.addStatus(thisActivity,(LinearLayout) topBar);
             }
         }
 
+    }
+
+    private void getNavigation(ViewGroup parent) {
+        int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = parent.getChildAt(i);
+            if (child instanceof ViewGroup) {
+                getNavigation((ViewGroup) child);
+                if (child instanceof NavigationBar) {
+                    topBar = child;
+                    break;
+                }
+            }
+        }
     }
 
     @Override
