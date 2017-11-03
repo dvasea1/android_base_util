@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.ebs.android_base_utility.R;
-
 /**
  * Created by barbaros.vasile on 11/3/2017.
  */
