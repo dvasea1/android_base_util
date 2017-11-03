@@ -297,6 +297,10 @@ public class RecyclerLazyLoad {
         }
     }
 
+    public void setLoadingFooterNormal(){
+        RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+    }
+
     public void reset(){
         ((BaseAdapterRecycler)adapter).clear();
      /*   final int size = adapter.getItemCount();
