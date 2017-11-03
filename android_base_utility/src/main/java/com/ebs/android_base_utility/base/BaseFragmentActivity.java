@@ -40,7 +40,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         onViewCreated();
         onActivityCreated();
         StatusBarUtil.setStatusTintColor(thisActivity);
-        topBar = findViewById(R.id.top);
+        topBar = findViewById(getTopBarResourceId());
         if(topBar != null){
             if(topBar instanceof LinearLayout){
                 StatusBarUtil.addStatus(thisActivity,(LinearLayout) topBar);
@@ -79,6 +79,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
 
     }
 
+    @Override
+    public int getTopBarResourceId() {
+        return 0;
+    }
 
     private void createLoadingView(int resId){
         RelativeLayout rootView = (RelativeLayout)findViewById(resId);

@@ -122,7 +122,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         super.onActivityCreated(savedInstanceState);
         isActivityCreated = true;
         isFragmentVisible = getUserVisibleHint();
-        topBar = view.findViewById(R.id.top);
+        topBar = view.findViewById(getTopBarResourceId());
         if(topBar != null){
             if(topBar instanceof LinearLayout){
                 StatusBarUtil.addStatus(getActivity(),(LinearLayout) topBar);
@@ -140,6 +140,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         }
     }
 
+    @Override
+    public int getTopBarResourceId() {
+        return 0;
+    }
 
     @Override
     public int getLayoutResourceId() {

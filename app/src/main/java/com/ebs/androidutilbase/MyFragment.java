@@ -17,7 +17,4 @@ public class MyFragment extends BaseFragment {
     public int getLayoutResourceId() {
         return R.layout.fragment;
     }
-
-
-
 }
