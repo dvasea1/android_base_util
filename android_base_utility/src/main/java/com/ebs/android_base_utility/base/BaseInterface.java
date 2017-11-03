@@ -7,7 +7,6 @@ import android.support.annotation.LayoutRes;
  */
 public interface BaseInterface {
     int getLayoutResourceId();
-    int getTopBarResourceId();
     @LayoutRes
     int getLayoutResourceIdLoading();
     int getRootLoadingViewResId();

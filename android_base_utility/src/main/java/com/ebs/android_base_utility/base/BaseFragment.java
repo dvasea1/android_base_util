@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import com.ebs.android_base_utility.R;
 import com.ebs.android_base_utility.base.util.LoadingView;
 import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
+import com.ebs.android_base_utility.base.util.NavigationBar;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
 
@@ -122,9 +123,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         super.onActivityCreated(savedInstanceState);
         isActivityCreated = true;
         isFragmentVisible = getUserVisibleHint();
-        topBar = view.findViewById(getTopBarResourceId());
+        topBar = view.findViewById(R.id.navigationBar);
         if(topBar != null){
-            if(topBar instanceof LinearLayout){
+            if(topBar instanceof NavigationBar){
                 StatusBarUtil.addStatus(getActivity(),(LinearLayout) topBar);
             }
         }
@@ -138,11 +139,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         } else {
             loadingView = new LoadingView().getProgressBar(getActivity(),rootView,getLayoutResourceIdLoading());
         }
-    }
-
-    @Override
-    public int getTopBarResourceId() {
-        return 0;
     }
 
     @Override

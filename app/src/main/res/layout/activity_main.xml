@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<LinearLayout
+<com.ebs.android_base_utility.base.util.NavigationBar
     android:background="#c12727"
     android:orientation="vertical"
     android:id="@+id/top1"
@@ -15,6 +15,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"></RelativeLayout>
-</LinearLayout>
+</com.ebs.android_base_utility.base.util.NavigationBar>
 
 </RelativeLayout>

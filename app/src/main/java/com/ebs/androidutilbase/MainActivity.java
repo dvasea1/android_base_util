@@ -25,10 +25,6 @@ public class MainActivity extends BaseFragmentActivity {
         return R.layout.activity_main;
     }
 
-    @Override
-    public int getTopBarResourceId() {
-        return super.getTopBarResourceId();
-    }
 
     @Override
     public void onActivityCreated() {

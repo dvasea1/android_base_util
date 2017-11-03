@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.ebs.android_base_utility.R;
 import com.ebs.android_base_utility.base.util.LoadingView;
 import com.ebs.android_base_utility.base.util.LocalBroadCastReceiver;
+import com.ebs.android_base_utility.base.util.NavigationBar;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
 
@@ -40,9 +41,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         onViewCreated();
         onActivityCreated();
         StatusBarUtil.setStatusTintColor(thisActivity);
-        topBar = findViewById(getTopBarResourceId());
+        topBar = findViewById(R.id.navigationBar);
         if(topBar != null){
-            if(topBar instanceof LinearLayout){
+            if(topBar instanceof NavigationBar){
                 StatusBarUtil.addStatus(thisActivity,(LinearLayout) topBar);
             }
         }
@@ -77,11 +78,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     @Override
     public void onActivityCreated() {
 
-    }
-
-    @Override
-    public int getTopBarResourceId() {
-        return 0;
     }
 
     private void createLoadingView(int resId){
