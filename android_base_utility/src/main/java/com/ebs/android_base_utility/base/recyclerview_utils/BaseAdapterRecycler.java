@@ -15,6 +15,11 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
     private List<T> mObjects;
     private ItemClickListener itemClickListener;
     private View emptyView;
+    private boolean DEBUG = false;
+
+    public void setDEBUG(boolean DEBUG) {
+        this.DEBUG = DEBUG;
+    }
 
     public BaseAdapterRecycler(final List<T> objects) {
         mObjects = objects;
@@ -54,7 +59,9 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
     DataEmptyObserver dataEmptyObserver = new DataEmptyObserver() {
         @Override
         public void onDataChanged(boolean isEmpty) {
-           // System.out.println("dataEmptyObserver "+isEmpty);
+            if(DEBUG){
+                System.out.println("dataEmptyObserver isEmpty "+isEmpty+" emptyView "+emptyView);
+            }
             if(isEmpty){
                 if(emptyView!=null)emptyView.setVisibility(View.VISIBLE);
             } else {

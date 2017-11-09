@@ -39,7 +39,7 @@ public class RecyclerLazyLoad {
     private View tToolbar;
     private View emptyView;
     private @LayoutRes  int resourceLayout;
-    private  @IdRes  int ResourceIdRoot;
+    private @IdRes  int ResourceIdRoot;
     private @IdRes  int ResourceIdProgress;
     private Boolean next;
 
@@ -103,7 +103,7 @@ public class RecyclerLazyLoad {
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
-    public void setAdapter(Context context){
+    public void setAdapter(Context context) {
         this.recyclerView.setItemAnimator(RecyclerViewUtils.getAnimator());
         this.recyclerView.setLayoutManager(RecyclerViewUtils.getLayoutManager(context,false));
         if(activity!=null) {
@@ -277,7 +277,7 @@ public class RecyclerLazyLoad {
             if(!isMoreDataAvailable){
                 RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
             }
-            if(getNext() != null){
+            if(getNext() != null) {
                 if (!getNext()) {
                     isMoreDataAvailable = false;
                     System.out.println("no more available ");
