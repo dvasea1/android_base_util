@@ -268,7 +268,7 @@ public class RecyclerLazyLoad {
             this.objects = (List<Object>) objects;
 
             this.objects.addAll(tempObjects);
-            adapter.notifyItemRangeInserted(adapter.getItemCount() , tempObjects.size());
+            adapter.notifyItemRangeInserted(adapter.getItemCount() , objects.size());
 
 
             offset += tempObjects.size();
