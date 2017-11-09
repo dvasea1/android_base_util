@@ -41,6 +41,11 @@ registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
 });
     }
 
+    @Override
+    public int getItemCount() {
+        return mObjects.size();
+    }
+
     /**
      * Adds the specified object at the end of the array.
      *
