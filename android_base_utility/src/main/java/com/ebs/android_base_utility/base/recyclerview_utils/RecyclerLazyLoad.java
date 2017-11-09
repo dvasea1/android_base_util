@@ -273,7 +273,7 @@ public class RecyclerLazyLoad {
 
             offset += tempObjects.size();
 
-            System.out.println("onLoadNextPage added items");
+            System.out.println("onLoadNextPage added items items "+objects.size()+" tempObjects "+tempObjects.size()+" adapter.getItemCount() "+adapter.getItemCount());
             if(!isMoreDataAvailable){
                 RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
             }

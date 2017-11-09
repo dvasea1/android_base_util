@@ -23,7 +23,22 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
 
     public BaseAdapterRecycler(final List<T> objects) {
         mObjects = objects;
+registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+    @Override
+    public void onChanged() {
+        checkIfEmpty();
+    }
 
+    @Override
+    public void onItemRangeInserted(int positionStart, int itemCount) {
+        checkIfEmpty();
+    }
+
+    @Override
+    public void onItemRangeRemoved(int positionStart, int itemCount) {
+        checkIfEmpty();
+    }
+});
     }
 
     /**
@@ -46,7 +61,24 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
         if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
     }
 
-    @Override
+    /*private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            checkIfEmpty();
+        }
+    };*/
+
+    /*@Override
     public int getItemCount() {
         if(mObjects.size()>0){
             if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
@@ -54,6 +86,18 @@ public abstract class BaseAdapterRecycler <T, VH extends RecyclerView.ViewHolder
             if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(true);
         }
         return mObjects.size();
+    }*/
+
+    private void checkIfEmpty(){
+        /*if(DEBUG){
+            System.out.println("dataEmptyObserver isEmpty "+isEmpty+" emptyView "+emptyView);
+        }*/
+        if (emptyView != null) {
+            final boolean emptyViewVisible =
+                    getItemCount() == 0;
+            emptyView.setVisibility(emptyViewVisible ? View.VISIBLE : View.GONE);
+            //setVisibility(emptyViewVisible ? View.GONE : View.VISIBLE);
+        }
     }
 
     DataEmptyObserver dataEmptyObserver = new DataEmptyObserver() {
