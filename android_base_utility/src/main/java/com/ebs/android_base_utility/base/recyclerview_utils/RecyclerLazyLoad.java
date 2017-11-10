@@ -42,6 +42,7 @@ public class RecyclerLazyLoad {
     private @IdRes  int ResourceIdRoot;
     private @IdRes  int ResourceIdProgress;
     private Boolean next;
+    private boolean endlessScroll = true;
 
     public RecyclerLazyLoad(FragmentActivity activity, RecyclerView recyclerView, RecyclerView.Adapter adapter){
         this.recyclerView = recyclerView;
@@ -127,26 +128,28 @@ public class RecyclerLazyLoad {
             @Override
             public void onLoadNextPage(View view) {
                 super.onLoadNextPage(view);
-                System.out.println("onLoadNextPage isMoreDataAvailable "+isMoreDataAvailable);
-                if(!isMoreDataAvailable){
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
-                }
+                if(endlessScroll) {
+                    System.out.println("onLoadNextPage isMoreDataAvailable " + isMoreDataAvailable);
+                    if (!isMoreDataAvailable) {
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout, ResourceIdRoot, ResourceIdProgress);
+                    }
 
-                LoadingFooter.State state = RecyclerViewUtils.getFooterViewState(recyclerView);
-                if(state == LoadingFooter.State.Loading) {
-                    Log.d("@Cundong", "the state is Loading, just wait..");
-                    return;
-                }
-                if (isMoreDataAvailable) {
-                    // loading more
-                    // adapter.addFooterView(new LoadingFooter(getDialogContext()));
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Loading, resourceLayout,ResourceIdRoot,ResourceIdProgress);
-                    if(loadInterface!=null)loadInterface.onLoadMore();
-                    //getFolders(false,null);
-                } else {
-                    //the end
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
-                    //headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
+                    LoadingFooter.State state = RecyclerViewUtils.getFooterViewState(recyclerView);
+                    if (state == LoadingFooter.State.Loading) {
+                        Log.d("@Cundong", "the state is Loading, just wait..");
+                        return;
+                    }
+                    if (isMoreDataAvailable) {
+                        // loading more
+                        // adapter.addFooterView(new LoadingFooter(getDialogContext()));
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Loading, resourceLayout, ResourceIdRoot, ResourceIdProgress);
+                        if (loadInterface != null) loadInterface.onLoadMore();
+                        //getFolders(false,null);
+                    } else {
+                        //the end
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout, ResourceIdRoot, ResourceIdProgress);
+                        //headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
+                    }
                 }
             }
 
@@ -275,13 +278,17 @@ public class RecyclerLazyLoad {
 
             System.out.println("onLoadNextPage added items items "+objects.size()+" tempObjects "+tempObjects.size()+" adapter.getItemCount() "+adapter.getItemCount());
             if(!isMoreDataAvailable){
-                RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                if(endlessScroll) {
+                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout, ResourceIdRoot, ResourceIdProgress);
+                }
             }
             if(getNext() != null) {
                 if (!getNext()) {
                     isMoreDataAvailable = false;
                     System.out.println("no more available ");
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    if(endlessScroll) {
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    }
                 } else {
                     RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
                 }
@@ -289,16 +296,22 @@ public class RecyclerLazyLoad {
                 if (tempObjects.size() < limit) {
                     isMoreDataAvailable = false;
                     System.out.println("no more available ");
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    if(endlessScroll) {
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    }
                 } else {
-                    RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    if(endlessScroll) {
+                        RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+                    }
                 }
             }
         }
     }
 
     public void setLoadingFooterNormal(){
-        RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+        if(endlessScroll) {
+            RecyclerViewUtils.setFooterViewState(activity, recyclerView,LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+        }
     }
 
     public void reset(){
@@ -368,5 +381,13 @@ public class RecyclerLazyLoad {
 
     public void setNext(Boolean next) {
         this.next = next;
+    }
+
+    public boolean isEndlessScroll() {
+        return endlessScroll;
+    }
+
+    public void setEndlessScroll(boolean endlessScroll) {
+        this.endlessScroll = endlessScroll;
     }
 }
