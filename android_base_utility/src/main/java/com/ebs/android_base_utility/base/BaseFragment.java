@@ -65,7 +65,17 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
 
                     System.out.println("XXX anim exists "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
                     if(isActivityCreated && isFragmentVisible){
-                        onActivityCreated();
+                        if(isAdded()) {
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(isAdded()) {
+                                        onActivityCreated();
+                                    }
+                                }
+                            }, 500);
+                        }
                     }
                 }
 
@@ -74,16 +84,19 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 }
             });
         } else {
-
             System.out.println("XXX anim null "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
             if(isActivityCreated && isFragmentVisible) {
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        onActivityCreated();
-                    }
-                }, 500);
+                if(isAdded()) {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(isAdded()) {
+                                onActivityCreated();
+                            }
+                        }
+                    }, 500);
+                }
             }
         }
         return anim;
@@ -106,13 +119,17 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         isFragmentVisible = isVisibleToUser;
         System.out.println("XXX setUserVisibleHint "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
         if(isActivityCreated && isFragmentVisible) {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onActivityCreated();
-                }
-            }, 500);
+            if(isAdded()) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(isAdded()) {
+                            onActivityCreated();
+                        }
+                    }
+                }, 500);
+            }
         }
     }
 
