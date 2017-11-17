@@ -22,9 +22,6 @@ import com.ebs.android_base_utility.base.util.NavigationBar;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.ButterKnife;
 
 public abstract class BaseFragmentActivity extends FragmentActivity implements BaseInterface {
@@ -32,7 +29,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     protected View loadingView;
     protected FragmentActivity thisActivity;
     private BroadcastReceiver receiver;
-    View topBar;
+    private View topBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,6 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         onViewCreated();
         onActivityCreated();
         StatusBarUtil.setStatusTintColor(thisActivity);
-        //topBar = getNavigationfindViewById(R.id.top);
         getNavigation((ViewGroup) getWindow().getDecorView().getRootView());
         if(topBar != null){
             if(topBar instanceof NavigationBar){
@@ -100,11 +96,11 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
     }
 
     private void createLoadingView(int resId){
-        RelativeLayout rootView = (RelativeLayout)findViewById(resId);
+        RelativeLayout rootView = findViewById(resId);
         loadingView = new LoadingView().getProgressBar(this,rootView,getLayoutResourceIdLoading());
     }
 
-    protected void changeFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
+    public void changeFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -123,9 +119,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
                 fragmentTransaction.addToBackStack(fragment.getClass().getName());
             }
             fragmentTransaction.commit();
-        } catch (Exception e){}
+        } catch (Exception e){e.printStackTrace();}
     }
-    protected void changeFragmentPopup(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
+
+    public void changeFragmentPopup(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -141,10 +138,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
                 fragmentTransaction.addToBackStack(fragment.getClass().getName());
             }
             fragmentTransaction.commit();
-        } catch (Exception e){}
+        } catch (Exception e){e.printStackTrace();}
     }
 
-    protected void changeFragmentPopupBottom(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
+    public void changeFragmentPopupBottom(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -160,10 +157,10 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
                 fragmentTransaction.addToBackStack(fragment.getClass().getName());
             }
             fragmentTransaction.commit();
-        } catch (Exception e){}
+        } catch (Exception e){e.printStackTrace();}
     }
 
-    protected void hideFragment(Fragment fragment){
+    public void hideFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.popBackStack();
     }
@@ -185,15 +182,15 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
         LocalBroadcastManager.getInstance(getDialogContext()).sendBroadcast(intent);
     }
 
-    protected void registerBroadCastReceiver(final LocalBroadCastReceiver broadcastReceiver){
+    public void registerBroadCastReceiver(final LocalBroadCastReceiver broadcastReceiver){
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 try{
-                    if(this != null){
+                    if(thisActivity != null && intent.getExtras() != null) {
                         broadcastReceiver.Receive(context,intent.getExtras().getString("action"),intent.getExtras().getString("sender"),intent.getExtras().getString("data"));
                     }
-                } catch (Exception e){}
+                } catch (Exception e){e.printStackTrace();}
             }
         };
         LocalBroadcastManager.getInstance(getDialogContext()).registerReceiver(receiver,new IntentFilter("filter"));

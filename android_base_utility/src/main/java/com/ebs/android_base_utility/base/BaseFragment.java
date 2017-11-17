@@ -1,13 +1,11 @@
 package com.ebs.android_base_utility.base;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -124,7 +122,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         isActivityCreated = true;
         isFragmentVisible = getUserVisibleHint();
         getNavigation((ViewGroup) view);
-        //topBar = view.findViewById(R.id.top);
         if(topBar != null){
             if(topBar instanceof NavigationBar){
                 StatusBarUtil.addStatus(getActivity(),(LinearLayout) topBar);
@@ -182,15 +179,15 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     @Override
     public void onActivityCreated() {
         isActivityCreated = false;
-        System.out.println("onActivityCreated "+getClass().getCanonicalName());
+        System.out.println("XXX onActivityCreated "+getClass().getCanonicalName());
     }
 
-    protected void registerBroadCastReceiver(final LocalBroadCastReceiver broadcastReceiver){
+    public void registerBroadCastReceiver(final LocalBroadCastReceiver broadcastReceiver){
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 try{
-                    if(getActivity()!=null){
+                    if(getActivity() != null && isAdded() && intent.getExtras() != null){
                         broadcastReceiver.Receive(context,intent.getExtras().getString("action"),intent.getExtras().getString("sender"),intent.getExtras().getString("data"));
                     }
                 } catch (Exception e){e.printStackTrace();}
@@ -205,26 +202,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
         intent.putExtra("data",new Gson().toJson(o));
         intent.putExtra("sender",sender);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        removeKeyboard();
-        if(receiver!=null){
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
-        }
-    }
-
-    private void removeKeyboard(){
-        try {
-            (getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            if (((getActivity()).getCurrentFocus() != null) && (((Activity) getActivity()).getCurrentFocus().getWindowToken() != null)) {
-                ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((getActivity()).getCurrentFocus().getWindowToken(), 0);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     protected void changeFragment(int idContainer, Fragment fragment, boolean addToBackStack,boolean animate,boolean replace){
@@ -246,14 +223,44 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 fragmentTransaction.addToBackStack(fragment.getClass().getName());
             }
             fragmentTransaction.commit();
-        } catch (Exception e){}
+        } catch (Exception e){e.printStackTrace();}
+    }
+
+    public void pop(){
+        if(getActivity() != null && isAdded()){
+            getActivity().onBackPressed();
+        }
     }
 
     public void hideKeyboard(View view) {
         if(view != null) {
-            InputMethodManager imm = (InputMethodManager) getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+    }
+
+    public void removeKeyboard(){
+        try {
+            (getActivity()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            if (((getActivity()).getCurrentFocus() != null) && ((getActivity()).getCurrentFocus().getWindowToken() != null)) {
+                InputMethodManager inputMethodManager = ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE));
+                if(inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow((getActivity()).getCurrentFocus().getWindowToken(), 0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        removeKeyboard();
+        if(receiver!=null){
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
         }
     }
 }
