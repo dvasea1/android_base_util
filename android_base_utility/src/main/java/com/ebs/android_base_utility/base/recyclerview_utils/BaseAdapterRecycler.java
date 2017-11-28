@@ -62,7 +62,7 @@ registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
     public void clear() {
         final int size = getItemCount();
         mObjects.clear();
-        notifyItemRangeRemoved(0, size);
+        notifyDataSetChanged();
         if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
     }
 
