@@ -315,14 +315,15 @@ public class RecyclerLazyLoad {
     }
 
     public void reset(){
+        if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0) {
+            headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
+        }
         ((BaseAdapterRecycler) adapter).setEmptyView(null);
         ((BaseAdapterRecycler)adapter).clear();
      /*   final int size = adapter.getItemCount();
         objects.clear();
         adapter.notifyItemRangeRemoved(0, size);*/
-        if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0) {
-            headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
-        }
+
 
         setMoreDataAvailable(true);
         setOffset(0);
