@@ -323,7 +323,7 @@ public class RecyclerLazyLoad {
             headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
         }*/
         if(endlessScroll) {
-            RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.Normal, resourceLayout,ResourceIdRoot,ResourceIdProgress);
+            RecyclerViewUtils.setFooterViewState(activity, recyclerView, LoadingFooter.State.TheEnd, resourceLayout,ResourceIdRoot,ResourceIdProgress);
         }
         ((BaseAdapterRecycler) adapter).setEmptyView(null);
         ((BaseAdapterRecycler)adapter).clear();
