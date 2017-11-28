@@ -315,6 +315,7 @@ public class RecyclerLazyLoad {
     }
 
     public void reset(){
+        ((BaseAdapterRecycler) adapter).setEmptyView(null);
         ((BaseAdapterRecycler)adapter).clear();
      /*   final int size = adapter.getItemCount();
         objects.clear();
@@ -322,7 +323,7 @@ public class RecyclerLazyLoad {
         if(headerAndFooterRecyclerViewAdapter.getFooterViewsCount()>0) {
             headerAndFooterRecyclerViewAdapter.removeFooterView(headerAndFooterRecyclerViewAdapter.getFooterView());
         }
-        ((BaseAdapterRecycler) adapter).setEmptyView(null);
+
         setMoreDataAvailable(true);
         setOffset(0);
         setNext(null);

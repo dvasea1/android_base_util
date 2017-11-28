@@ -63,7 +63,7 @@ registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
         final int size = getItemCount();
         mObjects.clear();
         notifyDataSetChanged();
-        if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
+       // if(dataEmptyObserver!=null)dataEmptyObserver.onDataChanged(false);
     }
 
     /*private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
@@ -105,7 +105,7 @@ registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
         }
     }
 
-    DataEmptyObserver dataEmptyObserver = new DataEmptyObserver() {
+    /*DataEmptyObserver dataEmptyObserver = new DataEmptyObserver() {
         @Override
         public void onDataChanged(boolean isEmpty) {
             if(DEBUG){
@@ -117,7 +117,7 @@ registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 if(emptyView!=null)emptyView.setVisibility(View.GONE);
             }
         }
-    };
+    };*/
 
     public T getItem(final int position) {
         return mObjects.get(position);
