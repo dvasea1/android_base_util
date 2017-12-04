@@ -28,6 +28,9 @@ import com.ebs.android_base_utility.base.util.NavigationBar;
 import com.ebs.android_base_utility.base.util.StatusBarUtil;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 
@@ -36,16 +39,20 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     protected View view;
     protected View loadingView;
     protected LayoutInflater inflater;
-    private boolean isActivityCreated = false;
+    // private boolean isActivityCreated = false;
+    private List<Integer> integers = new ArrayList<>();
     private boolean isFragmentVisible = false;
     private BroadcastReceiver receiver;
     View topBar;
+    String className;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("BASE YYY onCreate "+getClass().getCanonicalName());
         removeKeyboard();
         onCreated();
+        className = getClass().getCanonicalName();
     }
 
     @Override
@@ -63,8 +70,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 @Override
                 public void onAnimationEnd(Animation animation) {
 
-                    System.out.println("XXX anim exists "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
-                    if(isActivityCreated && isFragmentVisible){
+                    System.out.println("XXX anim exists "+className+" isActivityCreated "+ integers.size()+" isFragmentVisible "+isFragmentVisible);
+                    if(integers.size() == 0 && isFragmentVisible){
                         if(isAdded()) {
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -74,7 +81,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                                         onActivityCreated();
                                     }
                                 }
-                            }, 500);
+                            }, 100);
                         }
                     }
                 }
@@ -84,8 +91,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 }
             });
         } else {
-            System.out.println("XXX anim null "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
-            if(isActivityCreated && isFragmentVisible) {
+            System.out.println("XXX anim null "+className+" isActivityCreated "+ integers.size()+" isFragmentVisible "+isFragmentVisible);
+            if(integers.size() == 0 && isFragmentVisible) {
                 if(isAdded()) {
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -95,7 +102,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                                 onActivityCreated();
                             }
                         }
-                    }, 500);
+                    }, 100);
                 }
             }
         }
@@ -117,8 +124,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         isFragmentVisible = isVisibleToUser;
-        System.out.println("XXX setUserVisibleHint "+getClass().getCanonicalName()+" isActivityCreated "+ isActivityCreated+" isFragmentVisible "+isFragmentVisible);
-        if(isActivityCreated && isFragmentVisible) {
+        System.out.println("XXX setUserVisibleHint "+getClass().getName()+" isActivityCreated "+ integers.size()+" isFragmentVisible "+isFragmentVisible);
+        if(integers.size() == 0 && isFragmentVisible) {
             if(isAdded()) {
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -128,7 +135,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                             onActivityCreated();
                         }
                     }
-                }, 500);
+                }, 100);
             }
         }
     }
@@ -136,7 +143,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        isActivityCreated = true;
+        System.out.println("BASE YYY onActivityCreated "+getClass().getCanonicalName());
+        //isActivityCreated = true;
         isFragmentVisible = getUserVisibleHint();
         getNavigation((ViewGroup) view);
         if(topBar != null){
@@ -144,6 +152,18 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                 StatusBarUtil.addStatus(getActivity(),(LinearLayout) topBar);
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        System.out.println("BASE YYY onPause "+getClass().getCanonicalName());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("BASE YYY onResume "+getClass().getCanonicalName());
     }
 
     private void getNavigation(ViewGroup parent) {
@@ -195,7 +215,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
 
     @Override
     public void onActivityCreated() {
-        isActivityCreated = false;
+        integers.add(1);
+        //isActivityCreated = false;
         System.out.println("XXX onActivityCreated "+getClass().getCanonicalName());
     }
 
