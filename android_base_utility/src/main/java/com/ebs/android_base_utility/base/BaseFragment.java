@@ -249,7 +249,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
             if(animate) {
                 fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                         R.anim.fragment_slide_left_exit,
-                        R.anim.fragment_slide_right_enter,
+                        0,
                         R.anim.fragment_slide_right_exit);
             }
             if(replace) {
