@@ -127,7 +127,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity implements B
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if(animate) {
-                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_in_bottom, R.anim.fragment_slide_out_bottom,R.anim.fragment_slide_in_top, R.anim.fragment_slide_out_bottom);
+                fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_in_bottom, 0,0, R.anim.fragment_slide_out_bottom);
             }
             if(replace) {
                 fragmentTransaction.replace(idContainer, fragment);

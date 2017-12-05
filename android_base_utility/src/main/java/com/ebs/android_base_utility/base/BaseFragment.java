@@ -225,7 +225,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
             @Override
             public void onReceive(Context context, Intent intent) {
                 try{
-                    if(getActivity() != null && isAdded() && intent.getExtras() != null){
+                    if(getActivity() != null && intent.getExtras() != null){
                         broadcastReceiver.Receive(context,intent.getExtras().getString("action"),intent.getExtras().getString("sender"),intent.getExtras().getString("data"));
                     }
                 } catch (Exception e){e.printStackTrace();}

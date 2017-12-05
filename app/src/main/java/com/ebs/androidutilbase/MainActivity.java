@@ -29,7 +29,12 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void onActivityCreated() {
         super.onActivityCreated();
-
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragmentPopup(R.id.navi,MyFragment.newInstance(),true,true,true);
+            }
+        });
     }
 
 
