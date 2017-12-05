@@ -102,7 +102,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface {
                                 onActivityCreated();
                             }
                         }
-                    }, 100);
+                    }, 500);
                 }
             }
         }
